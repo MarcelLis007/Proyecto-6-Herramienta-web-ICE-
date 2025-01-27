@@ -223,6 +223,8 @@
     "q": "^0.8.12",
     "queue-microtask": "^1.2.3",
     "rc": "^1.2.8",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-refresh": "^0.14.2",
     "reduce-flatten": "^2.0.0",
     "reflect.getprototypeof": "^1.0.10",
