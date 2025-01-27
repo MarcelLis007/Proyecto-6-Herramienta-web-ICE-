@@ -2,7 +2,7 @@ import Navbar from "../components/NavBar";
 const LandingPage = () => {
     return (
         <div>
-            <Navbar></Navbar>
+            <Navbar>ggg</Navbar>
         </div>
     )
 }
