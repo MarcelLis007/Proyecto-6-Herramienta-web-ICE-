@@ -1,60 +1,144 @@
-import React from 'react'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [selectedEmprendedor, setSelectedEmprendedor] = useState(null);
+
+  const handleRedirect = (nombre) => {
+    setSelectedEmprendedor(nombre);
+    // Aquí puedes agregar la lógica para redirigir a otro apartado, por ejemplo:
+    alert(`Redirigiendo a la sección de: ${nombre}`);
+  };
+
+  // Datos de ejemplo para los emprendedores
+  const emprendedores = [
+    {
+      fechaRegistro: "2024-03-09",
+      nombre: "Yoongi Min",
+      detalles: {
+        edad: "28 años",
+        nivelEstudio: "Universitario",
+        sueldo: "1000-1500",
+        empleadosHombres: 7,
+        empleadosMujeres: 5,
+      },
+    },
+    {
+      fechaRegistro: "2024-04-12",
+      nombre: "Seok Seok",
+      detalles: {
+        edad: "32 años",
+        nivelEstudio: "Maestría",
+        sueldo: "1200-1700",
+        empleadosHombres: 4,
+        empleadosMujeres: 3,
+      },
+    },
+    {
+      fechaRegistro: "2024-01-22",
+      nombre: "Gaby Castillo",
+      detalles: {
+        edad: "25 años",
+        nivelEstudio: "Universitario",
+        sueldo: "1000-1300",
+        empleadosHombres: 2,
+        empleadosMujeres: 3,
+      },
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-amber-50">
-      {/* Navbar */}
-      <nav className="bg-amber-800 p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-white">Café Delicioso</h1>
-          <div className="space-x-4">
-            <a href="#" className="text-white hover:text-amber-200">Inicio</a>
-            <a href="#" className="text-white hover:text-amber-200">Menú</a>
-            <a href="#" className="text-white hover:text-amber-200">Contacto</a>
-          </div>
-        </div>
-      </nav>
+    <div className="App">
+      <header className="App-header">
+        <h1 className="App-title">CENTRO DE EMPRENDIMIENTOS UNIANDES</h1>
+      </header>
 
-      {/* Hero Section */}
-      <div className="container mx-auto py-12 px-4">
-        <div className="text-center">
-          <h2 className="text-4xl font-bold text-amber-900 mb-4">Bienvenido a Café Delicioso</h2>
-          <p className="text-lg text-amber-700 mb-8">El mejor café de la ciudad, hecho con amor</p>
-          <button className="bg-amber-600 text-white px-6 py-2 rounded-lg hover:bg-amber-700 transition-colors">
-            Ver Menú
+      <div className="App-body">
+        <aside className="App-sidebar">
+          <button className="sidebar-button">Histórico Emprendedores</button>
+          <button className="sidebar-button">Nuevo Registro</button>
+          <button className="sidebar-button">Encuesta</button>
+        </aside>
+
+        <main className="App-main">
+          <h1 className="App-main">HISTÓRICO DE EMPRENDIMIENTOS</h1>
+          <table className="App-table">
+            <thead>
+              <tr>
+                <th>Fecha Registro</th>
+                <th>Nombre Emprendedor</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {emprendedores.map((emprendedor, index) => (
+                <tr key={index}>
+                  <td>{emprendedor.fechaRegistro}</td>
+                  <td>{emprendedor.nombre}</td>
+                  <td>
+                    <button
+                      className="action-button"
+                      onClick={() => handleRedirect(emprendedor.nombre)}
+                    >
+                      Ver Detalles
+                    </button>
+                    <button
+                      className="action-buttonRep"
+                      onClick={() => handleRedirect("Reporte General")}
+                    >
+                      Ver Reporte General
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button
+            className="action-buttonEmp"
+            onClick={() => handleRedirect("Añadir Emprendedor")}
+          >
+            Añadir Emprendedor
           </button>
-        </div>
-
-        {/* Featured Products */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-          {/* Product Card 1 */}
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <div className="h-40 bg-amber-200 rounded-lg mb-4"></div>
-            <h3 className="text-xl font-semibold text-amber-900">Café Americano</h3>
-            <p className="text-amber-700">Nuestro clásico café americano</p>
-            <p className="text-amber-900 font-bold mt-2">$2.50</p>
-          </div>
-
-          {/* Product Card 2 */}
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <div className="h-40 bg-amber-200 rounded-lg mb-4"></div>
-            <h3 className="text-xl font-semibold text-amber-900">Cappuccino</h3>
-            <p className="text-amber-700">Espresso con espuma de leche</p>
-            <p className="text-amber-900 font-bold mt-2">$3.50</p>
-          </div>
-
-          {/* Product Card 3 */}
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <div className="h-40 bg-amber-200 rounded-lg mb-4"></div>
-            <h3 className="text-xl font-semibold text-amber-900">Latte</h3>
-            <p className="text-amber-700">Suave y cremoso</p>
-            <p className="text-amber-900 font-bold mt-2">$3.00</p>
-          </div>
-        </div>
+          {selectedEmprendedor && (
+            <div className="selected-emprendedor">
+              <h3>Detalles de: {selectedEmprendedor}</h3>
+              {/* Mostrar detalles del emprendedor seleccionado */}
+              {emprendedores
+                .filter(
+                  (emprendedor) => emprendedor.nombre === selectedEmprendedor
+                )
+                .map((emprendedor) => (
+                  <table key={emprendedor.nombre} className="details-table">
+                    <thead>
+                      <tr>
+                        <th>Edad</th>
+                        <th>Nivel de Estudio</th>
+                        <th>Rango de Sueldo</th>
+                        <th>Empleados Hombres</th>
+                        <th>Empleados Mujeres</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{emprendedor.detalles.edad}</td>
+                        <td>{emprendedor.detalles.nivelEstudio}</td>
+                        <td>{emprendedor.detalles.sueldo}</td>
+                        <td>{emprendedor.detalles.empleadosHombres}</td>
+                        <td>{emprendedor.detalles.empleadosMujeres}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                ))}
+            </div>
+          )}
+        </main>
       </div>
+
+      <footer className="App-footer">
+        <p>&copy; 2025 GAMARSIS</p>
+      </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
